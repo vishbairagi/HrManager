@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hr_manager/controllers/location_screen.dart';
 import 'package:hr_manager/views/leave_screen.dart';
 import 'package:hr_manager/views/salary_screen.dart';
 import 'package:intl/intl.dart';
@@ -19,7 +20,7 @@ class HomeScreen extends StatelessWidget {
 
   final HomeController controller = Get.put(HomeController());
   final ProfileController controller2 = Get.put(ProfileController());
-
+  final LocationController locationController = Get.find();
   List<Widget> get screens => [
     buildHomeTab(),
     TaskScreen(),
@@ -227,6 +228,41 @@ class HomeScreen extends StatelessWidget {
 
               const SizedBox(height: 20),
 
+              // **Office In Location Card**
+                  Card(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    elevation: 4,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start, // align everything left
+
+                        children: [
+                          Text("Live Location :", style: TextStyle(
+                            fontSize: 18, // increase size
+                            fontWeight: FontWeight.bold,
+                          ),),
+                          Row(
+
+children: [
+                             // const Icon(Icons.login, color: Colors.red),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Obx(() => Text(
+                                  locationController.officeInLocation.value.isNotEmpty
+                                      ? locationController.officeInLocation.value
+                                      : "Fetching location...",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.normal, fontSize: 16),
+                                )),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+SizedBox(height: 10,),
               /// SWIPE BUTTON
               GestureDetector(
                 onHorizontalDragEnd: (details) {
